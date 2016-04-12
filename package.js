@@ -1,6 +1,15 @@
-Package.describe({
+// XXX We should revisit how we factor MongoDB support into (1) the
+// server-side node.js driver [which you might use independently of
+// livedata, after all], (2) minimongo [ditto], and (3) Collection,
+// which is the class that glues the two of them to Livedata, but also
+// is generally the "public interface for newbies" to Mongo in the
+// Meteor universe. We want to allow the components to be used
+// independently, but we don't want to overwhelm the user with
+// minutiae.
+
+Package.describe( {
   name: 'bquarks:aerialjs',
-  version: '0.0.1',
+  version: '0.0.2',
   // Brief, one-line summary of the package.
   summary: 'Meteor package to connect web apps with corbel platform',
   // URL to the Git repository containing the source code for this package.
@@ -8,37 +17,79 @@ Package.describe({
   // By default, Meteor will default to using README.md for documentation.
   // To avoid submitting documentation, set this field to null.
   documentation: 'README.md'
-});
+} );
 
-Npm.depends({
-  'corbel-js': '0.4.0'
-});
+Npm.strip( {
+  mongodb: ['test/']
+} );
 
-Package.onUse(function(api) {
-    api.versionsFrom('1.2.1');
-    api.use('ecmascript', ['client', 'server']);
-    api.use('timbrandin:fetch', ['server']);
-    api.use('mongo', ['client', 'server']);
+Package.onUse( function ( api ) {
+  api.use( 'npm-mongo', 'server' );
+  api.use( 'allow-deny' );
 
-    // api.addAssets('lib/resources/config/config.json', ['server']);
+  api.use( [
+    'random',
+    'ejson',
+    'underscore',
+    'bquarks:aerial-minimongo',
+    'ddp',
+    'tracker',
+    'diff-sequence',
+    'mongo-id',
+    'check',
+    'ecmascript'
+  ] );
 
-    // api.addFiles('lib/common.js');
-    api.addFiles('lib/composr-connector/composr-connector.js', ['client','server']);
+  // Binary Heap data structure is used to optimize oplog observe driver
+  // performance.
+  api.use( 'binary-heap', 'server' );
 
-    api.addFiles('client/main.js', ['client']);
+  // Allow us to detect 'insecure'.
+  api.use( 'insecure', { weak: true } );
 
-    api.addFiles('server/composr-connector/composr-connector.js', ['server']);
-    api.addFiles('server/publications.js', ['server']);
+  // Allow us to detect 'autopublish', and publish collections if it's loaded.
+  api.use( 'autopublish', 'server', { weak: true } );
 
-    api.addFiles('server/file-to-delete.js', ['server']);
+  // Allow us to detect 'disable-oplog', which turns off oplog tailing for your
+  // app even if it's configured in the environment. (This package will be
+  // probably be removed before 1.0.)
+  api.use( 'disable-oplog', 'server', { weak: true } );
 
-    api.export('Caca', ['client']);
-});
+  // defaultRemoteCollectionDriver gets its deployConfig from something that is
+  // (for questionable reasons) initialized by the webapp package.
+  api.use( 'webapp', 'server', { weak: true } );
 
-Package.onTest(function(api) {
-    api.use('tinytest');
+  // If the facts package is loaded, publish some statistics.
+  api.use( 'facts', 'server', { weak: true } );
 
-    api.use('bquarks:aerialjs');
-    // Add test files, eg:
-    api.addFiles('tests/aerial-test.js');
-});
+  api.use( 'callback-hook', 'server' );
+
+  // Stuff that should be exposed via a real API, but we haven't yet.
+  api.export( 'MongoInternals', 'server' );
+  // For tests only.
+  api.export( 'MongoTest', 'server', { testOnly: true } );
+  api.export( 'Mongo' );
+
+  api.addFiles( ['mongo_driver.js', 'oplog_tailing.js',
+                 'observe_multiplex.js', 'doc_fetcher.js',
+                 'polling_observe_driver.js', 'oplog_observe_driver.js'],
+                'server' );
+  api.addFiles( 'local_collection_driver.js', ['client', 'server'] );
+  api.addFiles( 'remote_collection_driver.js', 'server' );
+  api.addFiles( 'collection.js', ['client', 'server'] );
+} );
+
+Package.onTest( function ( api ) {
+  api.use( 'mongo' );
+  api.use( 'check' );
+  api.use( ['tinytest', 'underscore', 'test-helpers', 'ejson', 'random',
+           'ddp', 'base64'] );
+  // XXX test order dependency: the allow_tests "partial allow" test
+  // fails if it is run before mongo_livedata_tests.
+  api.addFiles( 'mongo_livedata_tests.js', ['client', 'server'] );
+  api.addFiles( 'allow_tests.js', ['client', 'server'] );
+  api.addFiles( 'collection_tests.js', ['client', 'server'] );
+  api.addFiles( 'observe_changes_tests.js', ['client', 'server'] );
+  api.addFiles( 'oplog_tests.js', 'server' );
+  api.addFiles( 'doc_fetcher_tests.js', 'server' );
+} );

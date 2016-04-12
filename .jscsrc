@@ -1,11 +1,4 @@
 {
-    "requireCurlyBraces": [
-        "if",
-        "else",
-        "for",
-        "while",
-        "do"
-    ],
     "requireSpaceAfterKeywords": [
         "if",
         "else",
@@ -19,8 +12,9 @@
     ],
     "requireSpaceAfterComma": true,
     "requireSpaceBeforeComma": false,
+    "requireSpacesInsideParenthesizedExpression": true,
     "requireSpacesInsideObjectBrackets": "all",
-    "requireSpacesInsideParentheses": false,
+    "requireSpacesInsideParentheses": "all",
     "requireSpaceBetweenArguments": true,
     "requireSpacesInForStatement": true,
 
@@ -28,6 +22,8 @@
         "with"
     ],
     "requireKeywordsOnNewLine": [
+        "else",
+        "catch"
     ],
 
     "requireSpaceBeforeBinaryOperators": true,
