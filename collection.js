@@ -5,8 +5,15 @@
  * @summary Namespace for MongoDB-related items
  * @namespace
  */
-Mongo = {};
 
+AerialJS = Mongo = {};
+
+// Meteor.startup( () => {
+//   setTimeout( () => {
+//     console.log( Mongo );
+//     Mongo = AerialJS;
+//   }, 1000 );
+// } );
 /**
  * @summary Constructor for a Collection
  * @locus Anywhere
@@ -24,6 +31,7 @@ The default id generation technique is `'STRING'`.
  * @param {Function} options.transform An optional transformation function. Documents will be passed through this function before being returned from `fetch` or `findOne`, and before being passed to callbacks of `observe`, `map`, `forEach`, `allow`, and `deny`. Transforms are *not* applied for the callbacks of `observeChanges` or to cursors returned from publish functions.
  */
 Mongo.Collection = function ( name, options, config ) {
+
   var self = this;
   if ( !( self instanceof Mongo.Collection ) )
     throw new Error( 'use "new" to construct a Mongo.Collection' );

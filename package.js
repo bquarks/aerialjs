@@ -36,6 +36,7 @@ Package.onUse( function ( api ) {
     'tracker',
     'diff-sequence',
     'mongo-id',
+    'mongo',
     'check',
     'ecmascript'
   ] );
@@ -69,6 +70,7 @@ Package.onUse( function ( api ) {
   // For tests only.
   api.export( 'MongoTest', 'server', { testOnly: true } );
   api.export( 'Mongo' );
+  api.export( 'AerialJS' );
 
   api.addFiles( ['mongo_driver.js', 'oplog_tailing.js',
                  'observe_multiplex.js', 'doc_fetcher.js',
