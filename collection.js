@@ -6,8 +6,6 @@
  * @namespace
  */
 
-AerialJS = Mongo = {};
-
 // Meteor.startup( () => {
 //   setTimeout( () => {
 //     console.log( Mongo );
@@ -30,6 +28,7 @@ AerialJS = Mongo = {};
 The default id generation technique is `'STRING'`.
  * @param {Function} options.transform An optional transformation function. Documents will be passed through this function before being returned from `fetch` or `findOne`, and before being passed to callbacks of `observe`, `map`, `forEach`, `allow`, and `deny`. Transforms are *not* applied for the callbacks of `observeChanges` or to cursors returned from publish functions.
  */
+
 Mongo.Collection = function ( name, options, config ) {
 
   var self = this;
@@ -698,10 +697,10 @@ Mongo.Collection.prototype.upsert = function upsert(
 // We'll actually design an index API later. For now, we just pass through to
 // Mongo's, but make it synchronous.
 Mongo.Collection.prototype._ensureIndex = function ( index, options ) {
-  var self = this;
-  if ( !self._collection._ensureIndex )
-    throw new Error( 'Can only call _ensureIndex on server collections' );
-  self._collection._ensureIndex( index, options );
+  // var self = this;
+  // if ( !self._collection._ensureIndex )
+  //   throw new Error( 'Can only call _ensureIndex on server collections' );
+  // self._collection._ensureIndex( index, options );
 };
 
 Mongo.Collection.prototype._dropIndex = function ( index ) {

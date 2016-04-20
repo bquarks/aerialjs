@@ -24,6 +24,7 @@ Npm.strip( {
 } );
 
 Package.onUse( function ( api ) {
+  api.use( 'mongo' );
   api.use( 'npm-mongo', 'server' );
   api.use( 'allow-deny' );
 
@@ -36,7 +37,6 @@ Package.onUse( function ( api ) {
     'tracker',
     'diff-sequence',
     'mongo-id',
-    'mongo',
     'check',
     'ecmascript'
   ] );
@@ -64,13 +64,14 @@ Package.onUse( function ( api ) {
   api.use( 'facts', 'server', { weak: true } );
 
   api.use( 'callback-hook', 'server' );
-
   // Stuff that should be exposed via a real API, but we haven't yet.
   api.export( 'MongoInternals', 'server' );
   // For tests only.
   api.export( 'MongoTest', 'server', { testOnly: true } );
   api.export( 'Mongo' );
-  api.export( 'AerialJS' );
+
+  api.imply( 'mongo' );
+  // api.export( 'AerialJS' );
 
   api.addFiles( ['mongo_driver.js', 'oplog_tailing.js',
                  'observe_multiplex.js', 'doc_fetcher.js',
