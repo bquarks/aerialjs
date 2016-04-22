@@ -9,7 +9,7 @@
 
 Package.describe( {
   name: 'bquarks:aerialjs',
-  version: '0.0.3',
+  version: '0.0.4',
   // Brief, one-line summary of the package.
   summary: 'Meteor package to connect web apps with corbel platform',
   // URL to the Git repository containing the source code for this package.
@@ -24,15 +24,16 @@ Npm.strip( {
 } );
 
 Package.onUse( function ( api ) {
+  api.versionsFrom( 'METEOR@1.2.1' );
   api.use( 'mongo' );
   api.use( 'npm-mongo', 'server' );
-  api.use( 'allow-deny' );
+  api.use( 'allow-deny@1.0.2' );
 
   api.use( [
     'random',
     'ejson',
     'underscore',
-    'bquarks:aerial-minimongo',
+    'bquarks:aerial-minimongo@0.0.2',
     'ddp',
     'tracker',
     'diff-sequence',
