@@ -9,11 +9,11 @@
 
 Package.describe( {
   name: 'bquarks:aerialjs',
-  version: '0.0.2',
+  version: '0.0.3',
   // Brief, one-line summary of the package.
   summary: 'Meteor package to connect web apps with corbel platform',
   // URL to the Git repository containing the source code for this package.
-  git: 'https://github.com/bquarks/aerialjs.git',
+  git: 'https://github.com/bquarks/aerial-mongo.git',
   // By default, Meteor will default to using README.md for documentation.
   // To avoid submitting documentation, set this field to null.
   documentation: 'README.md'
