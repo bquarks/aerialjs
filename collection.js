@@ -318,8 +318,8 @@ _.extend( Mongo.Collection.prototype, {
                                  self._getFindOptions( argArray ) );
   },
 
-  distinct: function ( dis ) {
-    return this._collection.distinct( dis );
+  distinct: function ( dis, rel ) {
+    return this._collection.distinct( dis, rel );
   },
 
   /**
