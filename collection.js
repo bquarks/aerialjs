@@ -318,6 +318,10 @@ _.extend( Mongo.Collection.prototype, {
                                  self._getFindOptions( argArray ) );
   },
 
+  distinct: function ( dis ) {
+    return this._collection.distinct( dis );
+  },
+
   /**
    * @summary Finds the first document that matches the selector, as ordered by sort and skip options.
    * @locus Anywhere
