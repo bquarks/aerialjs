@@ -8,8 +8,8 @@ blaze-tools@1.0.8
 boilerplate-generator@1.0.8
 bquarks:aerial-corbel@0.0.9
 bquarks:aerial-minimongo@0.0.11
-bquarks:aerial-mongo@0.0.12
-bquarks:aerialjs@0.1.1
+bquarks:aerial-mongo@0.0.13
+bquarks:aerialjs@0.1.2
 callback-hook@1.0.8
 check@1.2.1
 ddp@1.2.5
