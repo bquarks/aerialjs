@@ -13,7 +13,7 @@ Package.describe({
 Package.onUse(function(api) {
   api.versionsFrom('METEOR@1.3.2.4');
   api.use(['ecmascript', 'bquarks:aerial-mongo@0.0.14', 'bquarks:aerial-minimongo@0.0.14',
-            'bquarks:aerial-corbel@0.2.1', 'bquarks:aerial-accounts@0.3.1'], {weak: false, unordered:false});
+            'bquarks:aerial-corbel@0.2.1', 'bquarks:aerial-accounts@0.4.0'], {weak: false, unordered:false});
 
   api.mainModule('aerialjs.js');
 });
